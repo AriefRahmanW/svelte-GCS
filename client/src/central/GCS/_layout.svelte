@@ -1,5 +1,4 @@
 <script>
-    import io from 'socket.io-client'
     import { push } from 'svelte-spa-router'
     import Dialog, {Title, Content, Actions} from '@smui/dialog';
     import Button, {Label} from '@smui/button';
@@ -8,7 +7,6 @@
     import GCS from './GCS.svelte'
     import WayPoint from './WayPoint.svelte'
     import Calibration from './Calibration.svelte'
-    import Info from '../../components/Info.svelte'
     import { AUTH } from '../../lib/firebase'
     import { makeid, getRandomArbitrary } from '../../lib/generator'
     import { FIRESTORE } from '../../lib/firebase'
@@ -17,20 +15,6 @@
     export let page = "SET"
 
     let errorMessage, simpleDialog, link = "", link_id = ""
-
-    const socket = io("http://localhost:3000")
-
-    socket.on("error", data => {
-        errorMessage = data
-    })
-
-    socket.on("closed", data => {
-        errorMessage = data
-    })
-
-    socket.on("payload", data => {
-        errorMessage = null
-    })
 
     function logout(){
 
@@ -124,12 +108,6 @@
     </div>
 
     <div class="main">
-
-        {#if errorMessage}
-
-            <Info info={errorMessage}/>
-
-        {/if}
 
 
         {#if page === "SET"}
